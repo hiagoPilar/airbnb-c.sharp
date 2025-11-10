@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using airbnb_c_.Domain.Entities;
 
 namespace airbnb_c_.Infrastructure.Persistence.Mappings
 {
