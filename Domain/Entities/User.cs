@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Globalization;
 
 namespace airbnb_c_.Domain.Entities
@@ -52,13 +53,56 @@ namespace airbnb_c_.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void changePassword(Password newPassword)
+        public void ChangePassword(Password newPassword)
         {
             Password = newPassword ?? throw new ArgumentNullException(nameof(newPassword));
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void enableTwoFactor(TwoFactorType)
+        public void EnableTwoFactor(TwoFactorType type)
+        {
+            TwoFactorEnabled = true;
+            TwoFactorType = type;
+            UpdatedAt = DateTime.UtcNow;
+        }
 
+        public void DisableTwoFactor()
+        {
+            TwoFactorEnabled = false;
+            TwoFactorType = null;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SetPasswordResetToken(string token, DateTime expiration)
+        {
+            PasswordResetToken = token;
+            PasswordResetTokenExpiration = expiration;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void CleanPasswordResetToken()
+        {
+            PasswordResetToken = null;
+            PasswordResetTokenExpiration = null;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void VerifyEmail()
+        {
+            IsEmailVerified = true;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Deactivate()
+        {
+            IsActive = false;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Activate()
+        {
+            IsActive = true;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
