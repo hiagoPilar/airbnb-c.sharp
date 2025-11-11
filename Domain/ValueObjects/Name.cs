@@ -4,8 +4,8 @@ namespace airbnb_c_.Domain.ValueObjects
 {
     public sealed class Name
     {
-        public string FirstName { get; }
-        public string LastName { get; }
+        public string FirstName { get; } = null!;
+        public string LastName { get; } = null!;
 
         private Name() { } //EF core
 

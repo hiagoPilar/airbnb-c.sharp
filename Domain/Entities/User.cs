@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Globalization;
-
+﻿using airbnb_c_.Domain.Enums;
+using airbnb_c_.Domain.ValueObjects;
 namespace airbnb_c_.Domain.Entities
 {
     public class User
     {
         public Guid Id { get; private set; }
-        public Name Name { get; private set; }
-        public Email Email { get; private set; }
-        public Password Password { get; private set; }
-        public PhoneNumber PhoneNumber { get; private set; }
+        public Name Name { get; private set; } = null!;
+        public Email Email { get; private set; } = null!;
+        public Password Password { get; private set; } = null!;
+        public PhoneNumber PhoneNumber { get; private set; } = null!;
         public UserRole Role { get; private set; }
         public bool IsEmailVerified { get; private set; }
         public bool IsActive { get; private set; }
@@ -22,11 +20,14 @@ namespace airbnb_c_.Domain.Entities
         public string? PasswordResetToken { get; private set; }
         public DateTime? PasswordResetTokenExpiration { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; private set; }
 
 
         //private constructor for ORM
-        private User() { }
+        private User() 
+        {
+
+        }
 
         //main contructor 
         public User(Name name, Email email, Password password, PhoneNumber phoneNumber, UserRole role)
@@ -40,6 +41,7 @@ namespace airbnb_c_.Domain.Entities
             IsActive = true;
             IsEmailVerified = false;
             CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         //bussines rules

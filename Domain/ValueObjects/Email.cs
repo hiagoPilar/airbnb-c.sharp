@@ -4,7 +4,7 @@ namespace airbnb_c_.Domain.ValueObjects
 {
     public sealed class Email
     {
-        public string Address { get; }
+        public string Address { get; } = null!;
 
         private Email() { }
 

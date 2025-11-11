@@ -40,7 +40,7 @@ namespace airbnb_c_.Infrastructure.Persistence.Mappings
 
             builder.OwnsOne(u => u.Email, e =>
             {
-                e.Property(p => p.Email)
+                e.Property(p => p.Address)
                     .HasMaxLength(200)
                     .HasColumnName("Email")
                     .IsRequired();
@@ -48,9 +48,8 @@ namespace airbnb_c_.Infrastructure.Persistence.Mappings
 
             builder.OwnsOne(u => u.Password, p =>
             {
-                p.Property(pw => pw.Hash)
-                    .HasMaxLength(500)
-                    .HasColumnName("PasswordHash")
+                p.Property(pw => pw.Value)
+                    .HasColumnName("Password")
                     .IsRequired();
             });
 

@@ -2,6 +2,7 @@
 using airbnb_c_.Domain.Entities;
 using airbnb_c_.Domain.Interfaces;
 using airbnb_c_.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace airbnb_c_.Infrastructure.Persistence.Repositories
 {
@@ -23,19 +24,21 @@ namespace airbnb_c_.Infrastructure.Persistence.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            var user = await _appDbContext.Users.findAsync(id);
+            var user = await _appDbContext.Users.FindAsync(id);
             if(user != null)
             {
-                _appDbContext.Users.DeleteAsync(user);
+                _appDbContext.Users.Remove(user);
                 await _appDbContext.SaveChangesAsync();
             }
         }
 
         public async Task<User?> GetByEmailAsync(string email)
         {
+            var normalizeEmail = email.ToLowerInvariant();
+
             return await _appDbContext.Users
                 .AsNoTracking()
-                .FirstOrDefault(u => u.Email.Address.ToLower() == email.ToLower());
+                .FirstOrDefaultAsync(u => u.Email.Address == normalizeEmail);
         }
 
         public async Task<User?> GetByIdAsync(Guid id)
@@ -47,7 +50,14 @@ namespace airbnb_c_.Infrastructure.Persistence.Repositories
 
         public async Task UpdateAsync(User user)
         {
-            await _appDbContext.Users.UpdateAsync(user);
+            var existingUser = await _appDbContext.Users
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            if (existingUser == null)
+                throw new ArgumentException("User not found.");
+
+            //atualiza somente as propriedades que mudaram
+            _appDbContext.Entry(existingUser).CurrentValues.SetValues(user);
             await _appDbContext.SaveChangesAsync();
         }
     }
