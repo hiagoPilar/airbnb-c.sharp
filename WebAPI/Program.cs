@@ -1,5 +1,7 @@
 using airbnb_c_.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using WebAPI.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+//database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//automapper
+builder.Services.AddAutoMapper(typeof(UserProfile));
 
 
 var app = builder.Build();

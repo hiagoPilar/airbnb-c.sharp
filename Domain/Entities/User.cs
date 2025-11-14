@@ -106,5 +106,42 @@ namespace airbnb_c_.Domain.Entities
             IsActive = true;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        // Métodos para atualizar campos opcionais
+        public void UpdateName(Name newName)
+        {
+            Name = newName ?? throw new ArgumentNullException(nameof(newName));
+            UpdateTimestamp();
+        }
+        public void ChangePhoneNumber(PhoneNumber phoneNumber)
+        {
+            PhoneNumber = phoneNumber ?? throw new ArgumentNullException(nameof(phoneNumber));
+            UpdateTimestamp();
+        }
+        public void UpdateBio(string? bio)
+        {
+            if (bio?.Length > 500)
+                throw new ArgumentException("Bio deve ter menos que 500 caracteres.");
+            
+            Bio = bio;
+            UpdateTimestamp();
+        }
+
+        public void ChangeProfilePictureUrl(string? profilePictureUrl)
+        {
+            ProfilePictureUrl = profilePictureUrl;
+            UpdateTimestamp();
+        }
+
+        public void SetLanguage(string? language)
+        {
+            Language = string.IsNullOrWhiteSpace(language) ? "pt-BR" : language;
+            UpdateTimestamp();
+        }
+
+        public void UpdateTimestamp()
+        {
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

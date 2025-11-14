@@ -22,14 +22,17 @@ namespace airbnb_c_.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(User user)
         {
-            var user = await _appDbContext.Users.FindAsync(id);
-            if(user != null)
-            {
-                _appDbContext.Users.Remove(user);
-                await _appDbContext.SaveChangesAsync();
-            }
+            _appDbContext.Users.Remove(user);
+            await _appDbContext.SaveChangesAsync(); 
+        }
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _appDbContext.Users
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<User?> GetByEmailAsync(string email)

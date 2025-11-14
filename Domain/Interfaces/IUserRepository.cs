@@ -6,8 +6,9 @@ namespace airbnb_c_.Domain.Interfaces
     {
         Task<User?> GetByIdAsync(Guid id);
         Task<User?> GetByEmailAsync(string email);
+        Task<List<User>> GetAllUsersAsync();
         Task AddAsync(User user);
         Task UpdateAsync(User user);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(User user);
     }
 }
