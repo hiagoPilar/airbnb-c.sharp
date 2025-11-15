@@ -143,5 +143,11 @@ namespace airbnb_c_.Domain.Entities
         {
             UpdatedAt = DateTime.UtcNow;
         }
+
+
+        public bool ValidatePassword(string rawPassword, IPasswordHasher passwordHasher)
+        {
+            return passwordHasher.Verify(rawPassword, passwordHasher.Hash);
+        }
     }
 }
